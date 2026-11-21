@@ -4,15 +4,6 @@
     python fit.py --boot 200            # + bootstrap 95% CIs (slower)
     python fit.py --skip_shrink         # skip the grid-shrinking sweep
 
-What it does (maps to the research questions in the project doc):
-  RQ1  Refit under several PARAMETER-COUNT CONVENTIONS (scaling/model.py:CONVENTIONS) with
-       (a) IsoFLOP parabolas ("Approach 2") and (b) a parametric loss surface
-       L = E + A/N^alpha + B/D^beta ("Approach 3"), and report how the compute-optimal
-       exponents and the optimal token count D* change.
-  RQ2  Re-run the same analysis on progressively smaller fitting grids (drop a budget,
-       drop a model size, ...) to see when conclusions stop being stable.
-  RQ3  Compare Approaches 1, 2 and 3 pairwise for every convention.
-
 All three of Hoffmann et al.'s approaches are implemented: 1 = training-curve envelope,
 2 = IsoFLOP parabolas, 3 = parametric loss surface. Everything is torch-free.
 """
@@ -275,7 +266,7 @@ def compute_report(runs):
                                    max=max(r["wall_seconds"] for r in runs) / 3600))
 
 
-# ----------------------------------------------------------------------------- structured perturbations of N
+# structured perturbations of N
 # Following the four structured perturbations of the parameter counts in Schaeffer et al. (2025):
 # multiplicative constant, additive constant, systematic (size-dependent) bias, log-normal noise.
 # Applied to the base convention's N; D and the loss values are left untouched.

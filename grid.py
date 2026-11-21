@@ -1,13 +1,9 @@
-"""Plan (and optionally run) the IsoFLOP training grid.
+"""Plan/runthe IsoFLOP training grid.
 
     python grid.py                          # print the plan with time estimates
     python grid.py --run                    # train everything, smallest budgets first (resumable)
     python grid.py --max_hours 3 --run      # drop the most expensive budgets until it fits
     python grid.py --shard 0/4 --run        # cluster: this process runs every 4th job
-
-Each (size, budget) job trains for D = C / flops_per_token tokens, rounded to whole steps.
-Jobs are skipped when the token count would exceed the prepared data (no repeated data),
-when the model would be absurdly over/under-trained, or when it has too few steps.
 """
 import argparse
 import json

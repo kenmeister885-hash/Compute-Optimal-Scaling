@@ -1,4 +1,4 @@
-"""Tokenize C4 (en) with the GPT-2 BPE into flat uint16 files: data/c4/{train,val}.bin
+"""Tokenize C4 with the GPT-2 BPE into flat uint16 files: data/c4/{train,val}.bin
 
     python prepare_data.py                       # 600M train tokens + 5M val tokens
     python prepare_data.py --train_tokens 300e6  # smaller / faster
