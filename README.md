@@ -5,13 +5,13 @@ Small-scale replication of the parameter-counting robustness analysis in Schaeff
 models trained on C4. Models: 7 sizes (0.4M-59M non-embedding params), IsoFLOP grid at 3-4 compute
 budgets (3e15-1e17 FLOPs).
 
-## Quickstart (single GPU, e.g. RTX 4070)
+## Set-up (single GPU, e.g. RTX 4070)
 ```bash
-pip install -r requirements.txt          # install a CUDA build of torch from pytorch.org first if needed
-python prepare_data.py --train_tokens 350e6   # slowest step (estimate: 30-60+ min); bottleneck is streaming C4, needs internet
-python bench.py                          # a few minutes: measures tokens/s per model size on YOUR GPU
-python grid.py                           # prints the plan + time estimate (add --max_hours N to cap it)
-python grid.py --run                     # trains the whole grid, resumable (finished runs are skipped)
+Install PyTorch depending on CUDA version from https://pytorch.org, then: pip install numpy scipy matplotlib tiktoken datasets
+python prepare_data.py --train_tokens 350e6   # slowest step (30-60+ min); bottleneck is streaming C4, needs internet
+python bench.py --micro_bsz 16           # a few minutes: measures tokens/s per model size on YOUR GPU
+python grid.py --preset fast --micro_bsz 16            # prints the plan + time estimate
+python grid.py --preset fast --micro_bsz 16 --run      # trains the grid; finished runs are skipped
 python fit.py --boot 200                 # tables, figures, bootstrap CIs, shrink sweep -> results/
 python tests/test_fit_recovery.py        # sanity check of the fitting code on a known synthetic law
 ```
@@ -20,7 +20,6 @@ Cluster: `python grid.py --shard 0/4 --run` (one process per GPU, shards 0..3).
 Presets: `--preset fast` (default, budgets 3e15/1e16/3e16) or `--preset full` (+1e17, needs >=480M tokens).
 
 ## Layout
-- `paper/` LaTeX draft sections, bibliography and NeurIPS checklist notes (see `paper/PAPER_README.md`)
 - `scaling/model.py` model, **parameter-count conventions** (`count_params`), `scaling/sizes.py` size ladder + FLOPs formula
 - `train.py` one run (own warmup+cosine schedule, data seen once, no repeats); `grid.py` planner/runner; `bench.py` throughput
 - `fit.py` Approaches 1-3, conventions, bootstrap, shrink sweep, figures
@@ -42,8 +41,3 @@ Presets: `--preset fast` (default, budgets 3e15/1e16/3e16) or `--preset full` (+
 - Approach 3 evaluates optima at C_ref (geometric mean of the budgets) using FLOPs/token as a function of N.
 - Smoke-tested on CPU with synthetic data; real-data behaviour is untested until you run the pilot.
 
-## NeurIPS checklist: where each answer comes from
-Reproducibility/code/setup (items 4-6): this README + `train.py` defaults + `grid.json`. Error bars (7): `fit.py --boot`.
-Compute (8): `results/summary.json -> compute` (GPU, hours per run, total FLOPs; also add failed/pilot runs by hand).
-Licenses (12): C4 (ODC-BY, via `allenai/c4`), GPT-2 BPE via tiktoken (MIT) - verify and cite versions yourself.
-Fill in a LICENSE for this repo yourself (item 13) and anonymize the repo link for submission.
