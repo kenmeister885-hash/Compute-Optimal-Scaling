@@ -7,7 +7,7 @@ budgets (3e15-1e17 FLOPs).
 
 ## Set-up (single GPU, e.g. RTX 4070)
 ```bash
-Install PyTorch for your CUDA version from https://pytorch.org, then: pip install numpy scipy matplotlib tiktoken datasets
+Install PyTorch depending on CUDA version from https://pytorch.org, then: pip install numpy scipy matplotlib tiktoken datasets
 python prepare_data.py --train_tokens 350e6   # slowest step (30-60+ min); bottleneck is streaming C4, needs internet
 python bench.py --micro_bsz 16           # a few minutes: measures tokens/s per model size on YOUR GPU
 python grid.py --preset fast --micro_bsz 16            # prints the plan + time estimate
