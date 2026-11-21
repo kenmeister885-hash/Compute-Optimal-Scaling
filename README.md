@@ -41,8 +41,3 @@ Presets: `--preset fast` (default, budgets 3e15/1e16/3e16) or `--preset full` (+
 - Approach 3 evaluates optima at C_ref (geometric mean of the budgets) using FLOPs/token as a function of N.
 - Smoke-tested on CPU with synthetic data; real-data behaviour is untested until you run the pilot.
 
-## NeurIPS checklist: where each answer comes from
-Reproducibility/code/setup (items 4-6): this README + `train.py` defaults + `grid.json`. Error bars (7): `fit.py --boot`.
-Compute (8): `results/summary.json -> compute` (GPU, hours per run, total FLOPs; also add failed/pilot runs by hand).
-Licenses (12): C4 (ODC-BY, via `allenai/c4`), GPT-2 BPE via tiktoken (MIT) - verify and cite versions yourself.
-Fill in a LICENSE for this repo yourself (item 13) and anonymize the repo link for submission.
