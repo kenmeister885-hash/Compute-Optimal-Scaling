@@ -1,0 +1,13 @@
+\section{Limitations}
+\label{sec:limitations}
+
+\begin{itemize}
+  \item \textbf{Scale.} Our models have 0.39M--59M non-embedding parameters and our budgets span about one order of magnitude, orders of magnitude below the runs studied by Hoffmann et al.\ and others. Conclusions may not transfer to larger scales.
+  \item \textbf{Embedding-dominated models.} With a 50k-token vocabulary, embedding and output-head parameters dominate the smallest models. This makes the parameter-counting conventions differ much more here than at larger scale, so differences across conventions should not be read as an estimate of the effect at scale.
+  \item \textbf{Single seed and untuned hyperparameters.} Each configuration is trained once, and learning rates follow an untuned heuristic. Bootstrap intervals capture fitting variability across runs, not training noise or hyperparameter sensitivity.
+  \item \textbf{Few data points.} Fits use \TODO{15} runs. The parametric fit has five free parameters, and the IsoFLOP fits use three to five points per budget, so intervals are wide.
+  \item \textbf{Discrete model sizes.} Approach~1 selects among seven fixed sizes, which makes its estimates coarse.
+  \item \textbf{Our own conventions and compute accounting.} The parameter-count conventions and the FLOPs formula are our definitions and may differ from those of the papers we compare against. We evaluate optima at a reference budget inside the grid, but exponents are extrapolated beyond it when used for larger budgets.
+  \item \textbf{Not a re-analysis of Chinchilla's data.} We do not re-fit Hoffmann et al.'s published data or reproduce Schaeffer et al.'s three interpretations of the reported model sizes; our parameter-count conventions differ from theirs, and we apply their structured perturbations to our own fitted allocations. As in their analysis, perturbations change only $N$, not $D$ or the losses.
+  \item \textbf{One dataset and tokenizer.} All experiments use C4 and the GPT-2 tokenizer.
+\end{itemize}

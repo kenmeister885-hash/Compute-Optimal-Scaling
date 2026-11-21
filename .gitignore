@@ -1,0 +1,10 @@
+data/*
+!data/.gitkeep
+runs/*
+!runs/.gitkeep
+results/*
+!results/.gitkeep
+bench.json
+grid.json
+__pycache__/
+*.pyc
