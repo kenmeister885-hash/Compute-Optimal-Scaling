@@ -20,7 +20,6 @@ Cluster: `python grid.py --shard 0/4 --run` (one process per GPU, shards 0..3).
 Presets: `--preset fast` (default, budgets 3e15/1e16/3e16) or `--preset full` (+1e17, needs >=480M tokens).
 
 ## Layout
-- `paper/` LaTeX draft sections, bibliography and NeurIPS checklist notes (see `paper/PAPER_README.md`)
 - `scaling/model.py` model, **parameter-count conventions** (`count_params`), `scaling/sizes.py` size ladder + FLOPs formula
 - `train.py` one run (own warmup+cosine schedule, data seen once, no repeats); `grid.py` planner/runner; `bench.py` throughput
 - `fit.py` Approaches 1-3, conventions, bootstrap, shrink sweep, figures
